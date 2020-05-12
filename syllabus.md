@@ -43,6 +43,8 @@ A more detailed listing of requirements and expectations will be shared in the c
 Mon May 4,
 Mon May 11,
 Mon May 18,
+NOT Mon May 25 (holiday),
+Mon Jun 1,
 
  - HTTP, servers/webservers, browsers, clients, URL/URI, HTTP as stateless, request/response, headers/body
  - The role of HTML, CSS, and JS
@@ -62,11 +64,10 @@ Mon May 18,
 At the end of Section 1 you should be able to write a simple multiple page web application using NodeJS that serves semantic HTML and styles with CSS.  You will receive from github repository updates and submit your work via Pull Requests (PRs) in the same fashion that many employers conduct their work.
 
 ### Section 2: The Recent Web
-NOT Mon May 25 (holiday),
-Mon Jun 1,
 Mon Jun 8,
 Mon Jun 15,
 Mon Jun 22,
+Mon Jun 29,
 
  - the DOM, cookies, localStorage, indexedDB
  - application state, state in model vs state in DOM
@@ -78,7 +79,6 @@ Mon Jun 22,
 At the end of Section 2 you should be able to write a simple single page web application (SPA) calling RESTful, external services, and use NodeJS to provide those service endpoints
 
 ### Section 3: The Modern Web Industry
-Mon Jun 29,
 Mon Jul 6,
 Mon Jul 13,
 Mon Jul 20,
