@@ -33,6 +33,7 @@ Items that are marked with `(For this class)` mean that they aren't global best 
 - Do not use `instanceof` or `typeof`
 - Always use syntax constructors over class constructors
   - E.g. use `{}` or `[]` instead of `new Object()` or `new Array()`
+- Always use {} in an `if` statement, even if it is one-line
 - Prefer to use `let` over `const` (For this class)
 - Always use semicolons where appropriate (For this class)
 - Do not use Map() or Set() (For this class, purely to learn objects)
