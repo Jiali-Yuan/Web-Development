@@ -1,7 +1,7 @@
 # Basic HTML-CSS
 
 * Start from the up-to-date master branch (`git checkout master; git pull origin master`)
-* Create a feature branch named 'basic-js' (`git checkout -b basic-html-css`)
+* Create a feature branch named 'basic-html-css' (`git checkout -b basic-html-css`)
 * Create the files described below
 * Add, commit, and push the branch to github
 * Create a PR to merge to master
