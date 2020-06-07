@@ -1,0 +1,155 @@
+#game-app {
+    width: 800px;
+    height:600px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+	align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 3px rgba(176, 191, 206, 0.596);
+    background-color: rgba(252, 252, 252, 0.842);
+}
+
+body {
+    background-image: url("game.jpg");
+    background-color: #cccccc;
+  }
+  
+
+.outgoing form {
+	display: flex;
+}
+
+.outgoing {
+	align-self: baseline;
+    width: 100%;
+}
+
+.outgoing form button {
+    flex-grow: 1;
+    background: #86dfba;
+    border: 0;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.reset button {
+    flex-grow: 1;
+    background: #86dfba;
+    border: 0;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+ol{
+    list-style:none;
+ }
+
+ .result-title{
+    display: flex;
+    padding-top: 10;
+    padding-right:30px;
+    padding-bottom:5px;
+    padding-left:30px;
+    margin-top:5px;
+    border-bottom: 1px solid #cacaca;
+    overflow: auto;
+
+}
+.library-title {
+    display: flex;
+    padding-top: 10;
+    padding-right:30px;
+    padding-bottom:5px;
+    padding-left:30px;
+    margin-top:5px;
+    border-bottom: 1px solid #cacaca;
+    overflow: auto;
+    color:rgb(121, 146, 9);
+}
+
+.words-library span {
+    color:rgb(18, 187, 178);
+}
+
+.result {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+  }
+
+ .result-list {
+    width: 400px;
+    height: 150px;
+    overflow-y: auto;
+    background-color: rgba(255,255,255,0.2);
+ } 
+
+ .words-library {
+    width: 400px;
+    height: 50px;
+    overflow-y: auto;
+    background-color: rgba(255,255,255,0.2);
+ }
+
+ .warning-result {
+     width: 400px;
+     height: 50px;
+ }
+
+.warning-result p{
+    font-family: courier;
+    font-size: 14px;
+    color: rgba(235, 16, 16, 0.644);
+}
+
+ .guess-title{
+     color: rgb(235, 165, 14);
+     padding-left: 10px;
+
+ }
+ .match-title{
+     color:rgb(145, 169, 236);
+     padding-left: 10px;
+ }
+ .turns-title{
+     color:olive;
+     padding-left: 10px;
+ }
+ .last-guess {
+    color: rgb(235, 165, 14);
+     padding-left: 40px;
+ }
+ .matches {
+    color:rgb(145, 169, 236);
+    padding-left: 135px;
+ }
+ .turns {
+    color:olive;
+    padding-left: 100px;
+ }
+
+ h1 {
+    color: #3abbee;
+    font-family: courier;
+    text-shadow: 0 0 0.1em #87F, 0 0 0.1em #87F, 0 0 0.1em #87F
+  }
+
+  .description p{
+    font-family: fantasy;
+    color: rgba(149, 15, 202, 0.705);
+  }
+
+ .enter-label {
+      color:#86dfba;
+      font-family: courier;
+  }
+
+
+  
