@@ -9,21 +9,25 @@ const clientSideItems = {};
                 renderLogin();
                 return response.json().then(err => Promise.reject(err));
             }
-            return response.json();
         })
-        .then(items => {
-            renderLogout();
-            renderTitle();
-            renderAdd();
-            for (const key in items) {
-                clientSideItems[key] = items[key];
-            }
-            renderList(clientSideItems);
+        .then(() => {
+            renderLoading();
+            fetch('/items').then(response => {
+                return response.json();
+            }).then(items => {
+                clearLoading();
+                renderLogout();
+                renderTitle();
+                renderAdd();
+                for (const key in items) {
+                    clientSideItems[key] = items[key];
+                }
+                renderList(clientSideItems);
+            });
         })
         .catch(err => renderStatus(err));
 
     const list = document.querySelector('.item-list');
-
     list.addEventListener('click', function (event) {
         const id = event.target.dataset.id;
         if (event.target.classList.contains('delete')) {
@@ -38,7 +42,7 @@ const clientSideItems = {};
                 if (response.ok || response.status === 404) {
                     delete clientSideItems[id];
                     renderList();
-                } 
+                }
                 if (!response.ok) {
                     return response.json().then(err => Promise.reject(err));
                 }
@@ -79,17 +83,7 @@ const clientSideItems = {};
             }).catch(err => renderStatus(err));;
         }
     });
-
-    document.onreadystatechange = function() { 
-        if (document.readyState !== "complete") { 
-            document.querySelector("div").style.visibility = "hidden"; 
-            document.querySelector(".loading").style.visibility = "visible"; 
-        } else { 
-            document.querySelector(".loading").style.display = "none"; 
-            document.querySelector("div").style.visibility = "visible"; 
-        } 
-    }; 
-}) ();
+})();
 
 function renderLogin() {
     const login = document.querySelector('.login');
@@ -99,7 +93,7 @@ function renderLogin() {
                 <input class="username" value="" placeholder="Username"/>
                 <button onclick="submitLogin()" type="submit">Enter</button>
             </form>
-         `
+         `;
     const loginButton = document.querySelector('.login button');
     const userName = document.querySelector('.username');
     userName.addEventListener('keyup', function (event) {
@@ -107,14 +101,21 @@ function renderLogin() {
         loginButton.disabled = !text;
     });
     loginButton.disabled = true;
-};
+}
 
 function renderLogout() {
     const logout = document.querySelector('.logout');
     logout.innerHTML = `
             <button onclick="submitLogout()" type="submit">Logout</button>
-         `
-};
+         `;
+}
+
+function renderLoading() {
+    const loading = document.querySelector('.loading');
+    loading.innerText = `
+           <span>Loading...</span>
+    `;
+}
 
 function renderStatus(err) {
     const status = document.querySelector('.status');
@@ -125,7 +126,7 @@ function renderTitle() {
     const title = document.querySelector('.title');
     title.innerHTML = `
         <h1>Items List</h1>
-    `
+    `;
 }
 
 function renderAdd() {
@@ -138,7 +139,7 @@ function renderAdd() {
                     <button onclick="addItems()" type="button">Add</button>
                 </form>
             </div>
-         `
+         `;
     const addButton = document.querySelector('.outgoing button');
     const itemName = document.querySelector('.item-name');
     itemName.addEventListener('keyup', function (event) {
@@ -162,7 +163,7 @@ function renderList() {
       </li>
     `;
     }).join('\n');
-};
+}
 
 function clearPage() {
     const logout = document.querySelector('.logout');
@@ -175,6 +176,11 @@ function clearPage() {
     status.innerText = "";
     outgoing.innerHTML = "";
     list.innerHTML = "";
+}
+
+function clearLoading() {
+    const loading = document.querySelector('.loading');
+    loading.innerText = "";
 }
 
 function clearStatus() {

@@ -15,13 +15,6 @@ function sidExists(sid) {
     return cookies.includes(sid);
 }
 
-function validUsername(username) {
-    if (username === undefined || username.includes("dog") || username.includes(" ")) {
-        return false;
-    }
-    return true;
-}
-
 function itemExists(name) {
     for (let key in serverSideItems) {
         if (serverSideItems[key].name.toLowerCase() === name.toLowerCase()) {
@@ -29,6 +22,13 @@ function itemExists(name) {
         }
     }
     return false;
+}
+
+function validUsername(username) {
+    if (username === undefined || username.includes("dog") || username.includes(" ")) {
+        return false;
+    }
+    return true;
 }
 
 const cookieCounter = () => {
@@ -59,7 +59,7 @@ app.get('/session', (req, res) => {
         res.status(401).json({ error: "Bad login: invalid sid." });
         return;
     }
-    res.json(serverSideItems);
+    res.sendStatus(200);
 });
 
 app.post('/session', express.json(), (req, res) => {
@@ -85,7 +85,7 @@ app.delete('/session', express.json(), (req, res) => {
 });
 
 app.get('/items', (req,res) => {
-    res.json(serverSideItems);
+    res.status(200).json(serverSideItems);
 });
 
 app.post('/items', express.json(), (req, res) => {
