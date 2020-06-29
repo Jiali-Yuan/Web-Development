@@ -1,0 +1,91 @@
+ 
+.title {
+    text-align: center;
+}
+
+.status {
+    color: red;
+    margin: 50px;
+    font-family: courier;
+} 
+
+.loading {
+    color: red;
+}
+.outgoing {
+    display: flex;  
+  }
+  .list-panel {
+    padding-top: 10px;;
+  }
+  
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul li {
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 40px;
+    background: rgb(252, 248, 225);
+    font-size: 18px;
+    transition: 0.2s;
+  }
+  
+  ul li:nth-child(odd) {
+    background: #f1f3e6;
+  }
+  
+  ul li:hover {
+    background: rgb(236, 220, 220);
+  }
+  
+  .title {
+    text-align: center;
+  }
+  
+  .delete {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 12px 16px 12px 16px;
+  }
+  .delete:hover {
+    background-color: #ee8917;
+    color: white;
+  }
+  .update {
+    position: right;
+    right: 0;
+    top: 0;
+    padding: 12px 16px 12px 16px;
+  }
+  .update:hover {
+    background-color: #ee8917;
+    color: white;
+  }
+  
+  .number {
+    width:50px;
+    height:25px;
+}
+  
+  .outgoing form {
+    margin-left: 100px;
+    border: 1px;
+    border-radius: 1;
+    width: 75%;
+    padding: 10px;
+    float: left;
+    font-size: 16px;
+  }
+  
+  .button {
+    width: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 0;
+  }
+
