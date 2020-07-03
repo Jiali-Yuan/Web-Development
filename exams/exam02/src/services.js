@@ -46,7 +46,7 @@ export const fetchLogIn = (username) => {
     });
   };
 
-  //see recipe list
+  //Get recipes list
   export const fetchRecipes = () => {
     return fetch('/recipes', {
       method: 'GET',
@@ -62,7 +62,7 @@ export const fetchLogIn = (username) => {
     });
   };
 
-  //click to add new recipe
+  //Add new recipe
   export const fetchAddRecipe = (title, ingredients, instruction) => {
     return fetch('/recipes', {
       method: 'POST',
@@ -83,7 +83,7 @@ export const fetchLogIn = (username) => {
     });
   };
 
-  //click from detail page to home page
+  //Back to home page
   export const fetchReturnPage = () => {
     return fetch('/recipes', {
       method: 'GET',
@@ -92,21 +92,5 @@ export const fetchLogIn = (username) => {
       if(response.ok) {
         return;
       }
-    });
-  };
-
-  //get a sepcific recipe detail
-  export const fetchRecipeDetails = () => {
-    return fetch('/recipes', {
-      method: 'GET',
-    })
-    .catch( () => {
-      return Promise.reject({code: 'network-error'});
-    })
-    .then( (response) => {
-      if(!response.ok) {
-        return response.json().then( result => Promise.reject(result) );
-      }
-      return response.json();
     });
   };

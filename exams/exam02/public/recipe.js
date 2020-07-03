@@ -127,7 +127,7 @@ function renderLogin(show) {
   var login = document.querySelector('.login');
 
   if (show) {
-    login.innerHTML = "\n        <h1>Login</h1>\n        <form>\n            <input class=\"username\" value=\"\" placeholder=\"Username\"/>\n            <button class=\"to-login\" type=\"button\">Login</button>\n        </form>\n     ";
+    login.innerHTML = "\n        <form>\n            <input class=\"username\" value=\"\" placeholder=\"Username\"/>\n            <button class=\"to-login\" type=\"button\">Login</button>\n        </form>\n     ";
     var loginButton = document.querySelector('.login button');
     var userName = document.querySelector('.username');
     userName.addEventListener('keyup', function (event) {
@@ -158,7 +158,7 @@ function renderList() {
   var listRecipe = document.querySelector('.recipes-list');
   listRecipe.innerHTML = Object.keys(appState.clientRecipeList).map(function (key) {
     var item = appState.clientRecipeList[key];
-    return "\n      <li>\n          <span data-id=\"".concat(item.id, "\">").concat(item.title, "</span>\n          <span>").concat(item.author, "</span> \n      </li>\n    ");
+    return "\n      <li>\n          <a data-id=\"".concat(item.id, "\" href=\"#\" class=\"to-details\">").concat(item.title, "</a>\n          <span>").concat(item.author, "</span> \n      </li>\n    ");
   }).join('\n');
 }
 
@@ -211,11 +211,30 @@ function renderAddPage(show) {
 
 function renderDetailsPage(list) {
   var listRecipe = document.querySelector('.details-page');
-  listRecipe.innerHTML = list.map(function (item) {
-    return "\n      <li>\n          <span class=\"detail-title\">".concat(item.title, "</span>\n          <span class=\"detail-author\">").concat(item.author, "</span> \n          <p class=\"detail-ingredients\">").concat(item.ingredients, "</p>\n          <p class=\"detail-instruction\">").concat(item.instruction, "</p>\n\n      </li>\n    ");
-  }).join('\n');
-} //to add new recipe button handler
+  listRecipe.innerHTML = "\n    <div class=\"detail-title\">\n       <span>Title: </span>\n       <span>".concat(list.title, "</span>\n    </div>\n    <div class=\"detail-author\">\n       <span>Author: </span>\n       <span>").concat(list.author, "</span>\n    </div>\n    <div class=\"detail-ingredients\">\n       <span>Ingredients: </span>\n       <span>").concat(list.ingredients, "</span>\n    </div>\n    <div class=\"detail-instruction\">\n       <span>Instruction: </span>\n       <span>").concat(list.instruction, "</span>\n    </div>\n    ");
+}
 
+function clearDetailsPage() {
+  var listRecipe = document.querySelector('.details-page');
+  listRecipe.innerHTML = '';
+}
+
+var detailButton = document.querySelector('.recipes-list');
+var first = true;
+detailButton.addEventListener('click', function (e) {
+  var id = e.target.dataset.id;
+  e.preventDefault();
+
+  if (first) {
+    Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchRecipes"])().then(function (list) {
+      renderDetailsPage(list[id]);
+      first = false;
+    });
+  } else {
+    clearDetailsPage();
+    first = true;
+  }
+}); //to add new recipe button handler
 
 var newRecipeButton = document.querySelector('.new-recipe');
 newRecipeButton.addEventListener('click', function (e) {
@@ -249,9 +268,13 @@ addNewRecipe.addEventListener('click', function (e) {
       ingredients: ingredients.value,
       instruction: instruction.value
     };
+    appState.error = '';
     renderReturnButton(false);
     renderAddPage(false);
     renderPage();
+  })["catch"](function () {
+    appState.error = 'All fields required';
+    renderErrors(appState.error);
   });
 }); //return home page button
 
@@ -303,24 +326,6 @@ logout.addEventListener('click', function (e) {
     renderPage();
   });
 });
-var list = document.querySelector('.recipes-list');
-list.addEventListener('click', function (event) {
-  var id = event.target.dataset.id;
-
-  if (event.target.classList.contains("".concat(list[id].title))) {
-    Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchRecipeDetails"])().then(function (list) {
-      appState.isLoggedIn = false;
-      appState.error = '';
-      appState.toLogout = false;
-      clearList();
-      renderLogin(false);
-      renderLogout(false);
-      renderNewRecipeButton(false);
-      renderReturnButton(true);
-      renderDetailsPage(list);
-    });
-  }
-});
 Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchLoginStatus"])().then(function () {
   appState.isLoggedIn = true;
   refreshData().then(function () {
@@ -339,7 +344,7 @@ Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchLoginStatus"])().then(functi
 /*!*************************!*\
   !*** ./src/services.js ***!
   \*************************/
-/*! exports provided: fetchLogIn, fetchLoginStatus, fetchLogOut, fetchRecipes, fetchAddRecipe, fetchReturnPage, fetchRecipeDetails */
+/*! exports provided: fetchLogIn, fetchLoginStatus, fetchLogOut, fetchRecipes, fetchAddRecipe, fetchReturnPage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -350,7 +355,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecipes", function() { return fetchRecipes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAddRecipe", function() { return fetchAddRecipe; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchReturnPage", function() { return fetchReturnPage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecipeDetails", function() { return fetchRecipeDetails; });
 //login button
 var fetchLogIn = function fetchLogIn(username) {
   return fetch('/session', {
@@ -402,7 +406,7 @@ var fetchLogOut = function fetchLogOut() {
       return;
     }
   });
-}; //see recipe list
+}; //Get recipes list
 
 var fetchRecipes = function fetchRecipes() {
   return fetch('/recipes', {
@@ -420,7 +424,7 @@ var fetchRecipes = function fetchRecipes() {
 
     return response.json();
   });
-}; //click to add new recipe
+}; //Add new recipe
 
 var fetchAddRecipe = function fetchAddRecipe(title, ingredients, instruction) {
   return fetch('/recipes', {
@@ -447,7 +451,7 @@ var fetchAddRecipe = function fetchAddRecipe(title, ingredients, instruction) {
 
     return response.json();
   });
-}; //click from detail page to home page
+}; //Back to home page
 
 var fetchReturnPage = function fetchReturnPage() {
   return fetch('/recipes', {
@@ -456,24 +460,6 @@ var fetchReturnPage = function fetchReturnPage() {
     if (response.ok) {
       return;
     }
-  });
-}; //get a sepcific recipe detail
-
-var fetchRecipeDetails = function fetchRecipeDetails() {
-  return fetch('/recipes', {
-    method: 'GET'
-  })["catch"](function () {
-    return Promise.reject({
-      code: 'network-error'
-    });
-  }).then(function (response) {
-    if (!response.ok) {
-      return response.json().then(function (result) {
-        return Promise.reject(result);
-      });
-    }
-
-    return response.json();
   });
 };
 

@@ -1,8 +1,6 @@
 import {
     fetchLogIn,
     fetchLoginStatus,
-    fetchAddPage,
-    fetchRecipeDetails,
     fetchRecipes,
     fetchAddRecipe,
     fetchLogOut,
@@ -40,7 +38,6 @@ function renderLogin(show) {
     const login = document.querySelector('.login');
     if (show) {
         login.innerHTML = `
-        <h1>Login</h1>
         <form>
             <input class="username" value="" placeholder="Username"/>
             <button class="to-login" type="button">Login</button>
@@ -79,7 +76,7 @@ function renderList() {
         const item = appState.clientRecipeList[key];
         return `
       <li>
-          <span data-id="${item.id}">${item.title}</span>
+          <a data-id="${item.id}" href="#" class="to-details">${item.title}</a>
           <span>${item.author}</span> 
       </li>
     `;
@@ -141,18 +138,47 @@ function renderAddPage(show) {
 function renderDetailsPage(list) {
     const listRecipe = document.querySelector('.details-page');
 
-    listRecipe.innerHTML = list.map((item) => {
-        return `
-      <li>
-          <span class="detail-title">${item.title}</span>
-          <span class="detail-author">${item.author}</span> 
-          <p class="detail-ingredients">${item.ingredients}</p>
-          <p class="detail-instruction">${item.instruction}</p>
-
-      </li>
+    listRecipe.innerHTML = `
+    <div class="detail-title">
+       <span>Title: </span>
+       <span>${list.title}</span>
+    </div>
+    <div class="detail-author">
+       <span>Author: </span>
+       <span>${list.author}</span>
+    </div>
+    <div class="detail-ingredients">
+       <span>Ingredients: </span>
+       <span>${list.ingredients}</span>
+    </div>
+    <div class="detail-instruction">
+       <span>Instruction: </span>
+       <span>${list.instruction}</span>
+    </div>
     `;
-    }).join('\n');
 }
+
+function clearDetailsPage() {
+    const listRecipe = document.querySelector('.details-page');
+    listRecipe.innerHTML = '';
+}
+
+const detailButton = document.querySelector('.recipes-list');
+let first = true;
+detailButton.addEventListener('click', (e) => {
+    const id = e.target.dataset.id;
+    e.preventDefault();
+    if (first) {
+        fetchRecipes()
+            .then((list) => {
+                renderDetailsPage(list[id]);
+                first = false;
+            });
+    } else {
+        clearDetailsPage();
+        first = true;
+    }
+});
 
 //to add new recipe button handler
 const newRecipeButton = document.querySelector('.new-recipe');
@@ -187,9 +213,14 @@ addNewRecipe.addEventListener('click', (e) => {
                 id: id, title: title.value, author: author,
                 ingredients: ingredients.value, instruction: instruction.value
             };
+            appState.error = '';
             renderReturnButton(false);
             renderAddPage(false);
             renderPage();
+        })
+        .catch(() => {
+            appState.error = 'All fields required';
+            renderErrors(appState.error);
         });
 })
 
@@ -246,26 +277,6 @@ logout.addEventListener('click', (e) => {
             appState.toLogout = false;
             renderPage();
         });
-});
-
-const list = document.querySelector('.recipes-list');
-list.addEventListener('click', function (event) {
-
-    const id = event.target.dataset.id;
-    if (event.target.classList.contains(`${list[id].title}`)) {
-        fetchRecipeDetails()
-            .then((list) => {
-                appState.isLoggedIn = false;
-                appState.error = '';
-                appState.toLogout = false;
-                clearList();
-                renderLogin(false);
-                renderLogout(false);
-                renderNewRecipeButton(false);
-                renderReturnButton(true);
-                renderDetailsPage(list);
-            });
-    }
 });
 
 fetchLoginStatus()

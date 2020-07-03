@@ -35,7 +35,7 @@ app.get('/session', (req, res) => {
 //login
 app.post('/session', express.json(), (req, res) => {
     const username = req.body.username;
-    if (username === 'dog') {
+    if (username === 'dog' || username === ' ') {
         res.status(403).json({ code: 'provide-error' });
         return;
     }
@@ -53,12 +53,12 @@ app.delete('/session', express.json(), (req, res) => {
     res.sendStatus(200);
 });
 
-//add page
+//Get recipes list
 app.get('/recipes', (req, res) => {
     res.status(200).json(recipes.recipeList);
 });
 
-//new recipe
+//Add new recipe
 app.post('/recipes', express.json(), (req, res) => {
     const uid = req.cookies.uid;
     const author = recipes.users[uid].username;
@@ -67,7 +67,7 @@ app.post('/recipes', express.json(), (req, res) => {
     const instruction = req.body.instruction;
     
     if (!title || !ingredients || !instruction) {
-        res.status(400).json({ error: "All the fields required" });
+        res.status(400).json({ code: "provide-error" });
     } else {
         const id = nextTitleId();
         const newRecipe = {
@@ -77,19 +77,6 @@ app.post('/recipes', express.json(), (req, res) => {
         recipes.recipeList[id] = newRecipe;
         res.status(200).json(recipes.recipeList[id]);
     }
-});
-
-
-//get details
-// app.get('/recipes/:id', express.json(), (req, res) => {
-//     const id = req.body.id;
-//     recipeList[id] = req.body;
-//     res.status(200).json(recipeList[id]);
-// });
-
-app.get('/recipes/:listId', express.json(),(req, res) => {
-    const id = req.body.id;
-    res.status(200).json(recipes.recipeList[id]);
 });
 
 app.listen(PORT, () => console.log(`listening on http://localhost:${PORT}`));
