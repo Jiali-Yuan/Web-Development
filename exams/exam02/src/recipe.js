@@ -10,16 +10,17 @@ import {
 import {
     appState,
     clearAddPage,
-    clearList,
     clearDetailsPage,
-    renderDetailsPage,
+    clearList,
     renderAddPage,
+    renderDetailsPage,
     renderErrors,
+    renderHead,
+    renderLogin,
     renderLogout,
-    renderNewRecipeButton,
     renderPage,
     renderReturnButton,
-    renderHead
+    renderNewRecipeButton,
 } from './recipe-web.js';
 
 function refreshData() {
@@ -32,25 +33,25 @@ function refreshData() {
 }
 
 const detailButton = document.querySelector('.recipes-list');
-let firstClick = true;
-console.log(detailButton);
 detailButton.addEventListener('click', (e) => {
     e.preventDefault();
     const id = e.target.dataset.id;
-    console.log(e.target);
-    if (firstClick) {
-        fetchRecipes()
-            .then((list) => {
-                renderDetailsPage(list[id]);
-                firstClick = false;
-            });
-    } else {
-        clearDetailsPage();
-        firstClick = true;
+    if (id === undefined) {
+        return;
     }
+    fetchRecipes()
+        .then((list) => {
+            clearList();
+            renderHead(false);
+            renderLogout(false);
+            renderNewRecipeButton(false);
+            renderLogin(false);
+            renderDetailsPage(list[id]);
+            renderReturnButton(true);
+            renderErrors('');
+        });
 });
 
-//to add new recipe button handler
 const newRecipeButton = document.querySelector('.new-recipe');
 newRecipeButton.addEventListener('click', (e) => {
     if (!e.target.classList.contains('new-recipe-button')) {
@@ -65,7 +66,6 @@ newRecipeButton.addEventListener('click', (e) => {
     clearDetailsPage();
 })
 
-//add new recipe button handler
 const addNewRecipe = document.querySelector('.add-page');
 addNewRecipe.addEventListener('click', (e) => {
     if (!e.target.classList.contains('add-new-recipe')) {
@@ -75,7 +75,6 @@ addNewRecipe.addEventListener('click', (e) => {
     const title = document.querySelector('.add-title');
     const ingredients = document.querySelector('.add-ingredients');
     const instruction = document.querySelector('.add-instruction');
-
 
     fetchAddRecipe(title, ingredients, instruction)
         .then((list) => {
@@ -87,8 +86,10 @@ addNewRecipe.addEventListener('click', (e) => {
             };
             appState.error = '';
             renderReturnButton(false);
+            renderDetailsPage(list);
             renderAddPage(false);
-            renderPage();
+            renderReturnButton(true);
+            renderErrors('');
         })
         .catch(() => {
             appState.error = 'All fields required';
@@ -96,24 +97,28 @@ addNewRecipe.addEventListener('click', (e) => {
         });
 })
 
-//return home page button
 const returnButton = document.querySelector('.return-button');
 returnButton.addEventListener('click', (e) => {
     if (!e.target.classList.contains('return')) {
         return;
     }
     fetchReturnPage()
-        .then((list) => {
-            appState.isLoggedIn = true;
-            appState.error = '';
-            appState.toLogout = true;
-            renderReturnButton(false);
-            clearAddPage();
-            renderPage();
+        .then(() => {
+            if (appState.isLoggedIn) {
+                appState.error = '';
+                renderReturnButton(false);
+                clearAddPage();
+                clearDetailsPage();
+                renderPage();
+            } else {
+                appState.error = '';
+                renderReturnButton(false);
+                clearDetailsPage();
+                renderPage();
+            }
         });
 })
 
-//login button
 const login = document.querySelector('.login');
 login.addEventListener('click', (e) => {
     if (!e.target.classList.contains('to-login')) {
@@ -125,18 +130,16 @@ login.addEventListener('click', (e) => {
         .then((list) => {
             appState.isLoggedIn = true;
             appState.error = '';
-            appState.toLogout = true;
             appState.clientRecipeList = list;
             renderPage();
             clearDetailsPage();
         })
         .catch(() => {
-            appState.error = 'Login failed';
+            appState.error = 'Login failed, try again';
             renderPage();
         });
 });
 
-//logout button
 const logout = document.querySelector('.logout');
 logout.addEventListener('click', (e) => {
     if (!e.target.classList.contains('to-logout')) {
@@ -147,7 +150,6 @@ logout.addEventListener('click', (e) => {
         .then(() => {
             appState.isLoggedIn = false;
             appState.error = '';
-            appState.toLogout = false;
             renderPage();
             renderHead(true);
         });

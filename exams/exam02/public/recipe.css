@@ -1,9 +1,9 @@
 body {
-    background-color: rgb(241, 245, 204);
     background-image: url("food.jpg");
   }
 
   .recipes-list {
+      display: block;
     text-align: center;
     position:fixed;
     top: 60%;
@@ -13,6 +13,7 @@ body {
     margin-left: -15em; 
     font-family: courier;
     font-size: large;
+    overflow-y: scroll;
   }
 
   .login {
@@ -48,11 +49,24 @@ body {
   }
 
   .details-page {
-    width: 300px;
-    margin-top: 100px;
-    padding: 10px; 
-    color: #50bcee;
+    text-align: center;
+    position:fixed;
+    top: 60%;
+    left: 40%;
+    width:30em;
+    margin-top: -15em;
+    margin-left: -15em; 
     font-family: courier;
+    font-size: large;
+  }
+
+  .detail-header {
+    position:fixed;
+    color: red;
+    top: 10%;
+    left: 40%;
+    font-size: 25px;
+    font-family: initial;
   }
 
   ul{
@@ -64,7 +78,7 @@ body {
  
  a{
     text-decoration:none;
-    color: red;
+    color: rgba(240, 105, 51, 0.973);
  }
 
  button {
@@ -77,6 +91,13 @@ body {
     cursor: pointer;
 }
 
+a:hover {
+    background-color: #c3f07ac7;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
 .add-page {
     color: #3abbee;
     font-family: courier;
@@ -102,8 +123,18 @@ h1 {
     top: 150px;
     right: 200px;
     width: 230px;
-    color: red;
+    color: rgb(64, 247, 18);
     font-size: 30px;
     font-family: emoji;
 }
+
+.note {
+    font-size: 20px;
+    color: teal;
+}
+
+span {
+    color: rgb(73, 163, 13);
+}
+
   

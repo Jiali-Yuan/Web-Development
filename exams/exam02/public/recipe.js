@@ -111,7 +111,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderHead", function() { return renderHead; });
 var appState = {
   isLoggedIn: false,
-  toLogout: false,
   addRecipe: false,
   error: '',
   clientRecipeList: {}
@@ -226,7 +225,7 @@ function renderAddPage(show) {
 
 function renderDetailsPage(list) {
   var listRecipe = document.querySelector('.details-page');
-  listRecipe.innerHTML = "\n    <div class=\"detail-title\">\n       <span>Title: </span>\n       <span>".concat(list.title, "</span>\n    </div>\n    <div class=\"detail-author\">\n       <span>Author: </span>\n       <span>").concat(list.author, "</span>\n    </div>\n    <div class=\"detail-ingredients\">\n       <span>Ingredients: </span>\n       <span>").concat(list.ingredients, "</span>\n    </div>\n    <div class=\"detail-instruction\">\n       <span>Instruction: </span>\n       <span>").concat(list.instruction, "</span>\n    </div>\n    ");
+  listRecipe.innerHTML = "\n    <span class=\"detail-header\">".concat(list.title, "'s details</span>\n    <div class=\"detail-title\">\n       <span class=\"note\">Title: </span>\n       <span>").concat(list.title, "</span>\n    </div>\n    <div class=\"detail-author\">\n       <span class=\"note\">Author: </span>\n       <span>").concat(list.author, "</span>\n    </div>\n    <div class=\"detail-ingredients\">\n       <span class=\"note\">Ingredients: </span>\n       <span>").concat(list.ingredients, "</span>\n    </div>\n    <div class=\"detail-instruction\">\n       <span class=\"note\">Instruction: </span>\n       <span>").concat(list.instruction, "</span>\n    </div>\n    ");
 }
 
 function clearDetailsPage() {
@@ -261,24 +260,25 @@ function refreshData() {
 }
 
 var detailButton = document.querySelector('.recipes-list');
-var firstClick = true;
-console.log(detailButton);
 detailButton.addEventListener('click', function (e) {
   e.preventDefault();
   var id = e.target.dataset.id;
-  console.log(e.target);
 
-  if (firstClick) {
-    Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchRecipes"])().then(function (list) {
-      Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderDetailsPage"])(list[id]);
-      firstClick = false;
-    });
-  } else {
-    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearDetailsPage"])();
-    firstClick = true;
+  if (id === undefined) {
+    return;
   }
-}); //to add new recipe button handler
 
+  Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchRecipes"])().then(function (list) {
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearList"])();
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderHead"])(false);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderLogout"])(false);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderNewRecipeButton"])(false);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderLogin"])(false);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderDetailsPage"])(list[id]);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderReturnButton"])(true);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderErrors"])('');
+  });
+});
 var newRecipeButton = document.querySelector('.new-recipe');
 newRecipeButton.addEventListener('click', function (e) {
   if (!e.target.classList.contains('new-recipe-button')) {
@@ -292,8 +292,7 @@ newRecipeButton.addEventListener('click', function (e) {
   Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderNewRecipeButton"])(false);
   Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderHead"])(false);
   Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearDetailsPage"])();
-}); //add new recipe button handler
-
+});
 var addNewRecipe = document.querySelector('.add-page');
 addNewRecipe.addEventListener('click', function (e) {
   if (!e.target.classList.contains('add-new-recipe')) {
@@ -315,30 +314,36 @@ addNewRecipe.addEventListener('click', function (e) {
     };
     _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = '';
     Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderReturnButton"])(false);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderDetailsPage"])(list);
     Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderAddPage"])(false);
-    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderReturnButton"])(true);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderErrors"])('');
   })["catch"](function () {
     _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = 'All fields required';
     Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderErrors"])(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error);
   });
-}); //return home page button
-
+});
 var returnButton = document.querySelector('.return-button');
 returnButton.addEventListener('click', function (e) {
   if (!e.target.classList.contains('return')) {
     return;
   }
 
-  Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchReturnPage"])().then(function (list) {
-    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].isLoggedIn = true;
-    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = '';
-    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].toLogout = true;
-    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderReturnButton"])(false);
-    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearAddPage"])();
-    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
+  Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchReturnPage"])().then(function () {
+    if (_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].isLoggedIn) {
+      _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = '';
+      Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderReturnButton"])(false);
+      Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearAddPage"])();
+      Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearDetailsPage"])();
+      Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
+    } else {
+      _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = '';
+      Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderReturnButton"])(false);
+      Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearDetailsPage"])();
+      Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
+    }
   });
-}); //login button
-
+});
 var login = document.querySelector('.login');
 login.addEventListener('click', function (e) {
   if (!e.target.classList.contains('to-login')) {
@@ -349,16 +354,14 @@ login.addEventListener('click', function (e) {
   Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchLogIn"])(username).then(function (list) {
     _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].isLoggedIn = true;
     _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = '';
-    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].toLogout = true;
     _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].clientRecipeList = list;
     Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
     Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearDetailsPage"])();
   })["catch"](function () {
-    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = 'Login failed';
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = 'Login failed, try again';
     Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
   });
-}); //logout button
-
+});
 var logout = document.querySelector('.logout');
 logout.addEventListener('click', function (e) {
   if (!e.target.classList.contains('to-logout')) {
@@ -368,7 +371,6 @@ logout.addEventListener('click', function (e) {
   Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchLogOut"])().then(function () {
     _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].isLoggedIn = false;
     _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = '';
-    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].toLogout = false;
     Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
     Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderHead"])(true);
   });
@@ -402,7 +404,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRecipes", function() { return fetchRecipes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAddRecipe", function() { return fetchAddRecipe; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchReturnPage", function() { return fetchReturnPage; });
-//login button
 var fetchLogIn = function fetchLogIn(username) {
   return fetch('/session', {
     method: 'POST',
@@ -425,8 +426,7 @@ var fetchLogIn = function fetchLogIn(username) {
 
     return response.json();
   });
-}; //login status
-
+};
 var fetchLoginStatus = function fetchLoginStatus() {
   return fetch('/session', {
     method: 'GET'
@@ -443,8 +443,7 @@ var fetchLoginStatus = function fetchLoginStatus() {
 
     return;
   });
-}; //logout button
-
+};
 var fetchLogOut = function fetchLogOut() {
   return fetch('/session', {
     method: 'DELETE'
@@ -453,8 +452,7 @@ var fetchLogOut = function fetchLogOut() {
       return;
     }
   });
-}; //Get recipes list
-
+};
 var fetchRecipes = function fetchRecipes() {
   return fetch('/recipes', {
     method: 'GET'
@@ -471,8 +469,7 @@ var fetchRecipes = function fetchRecipes() {
 
     return response.json();
   });
-}; //Add new recipe
-
+};
 var fetchAddRecipe = function fetchAddRecipe(title, ingredients, instruction) {
   return fetch('/recipes', {
     method: 'POST',
@@ -483,8 +480,7 @@ var fetchAddRecipe = function fetchAddRecipe(title, ingredients, instruction) {
       title: title.value,
       ingredients: ingredients.value,
       instruction: instruction.value
-    }) //   body: JSON.stringify(),
-
+    })
   })["catch"](function () {
     return Promise.reject({
       code: 'network-error'
@@ -498,8 +494,7 @@ var fetchAddRecipe = function fetchAddRecipe(title, ingredients, instruction) {
 
     return response.json();
   });
-}; //Back to home page
-
+};
 var fetchReturnPage = function fetchReturnPage() {
   return fetch('/recipes', {
     method: 'GET'

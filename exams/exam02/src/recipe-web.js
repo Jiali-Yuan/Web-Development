@@ -1,6 +1,5 @@
 const appState = {
     isLoggedIn: false,
-    toLogout: false,
     addRecipe: false,
     error: '',
     clientRecipeList: {}
@@ -12,7 +11,7 @@ function renderHead(show) {
         headline.innerHTML = `
         <h1>My Recipes</h1>
      `;
-    }else {
+    } else {
         headline.innerHTML = '';
     }
 }
@@ -139,20 +138,21 @@ function renderDetailsPage(list) {
     const listRecipe = document.querySelector('.details-page');
 
     listRecipe.innerHTML = `
+    <span class="detail-header">${list.title}'s details</span>
     <div class="detail-title">
-       <span>Title: </span>
+       <span class="note">Title: </span>
        <span>${list.title}</span>
     </div>
     <div class="detail-author">
-       <span>Author: </span>
+       <span class="note">Author: </span>
        <span>${list.author}</span>
     </div>
     <div class="detail-ingredients">
-       <span>Ingredients: </span>
+       <span class="note">Ingredients: </span>
        <span>${list.ingredients}</span>
     </div>
     <div class="detail-instruction">
-       <span>Instruction: </span>
+       <span class="note">Instruction: </span>
        <span>${list.instruction}</span>
     </div>
     `;
@@ -177,5 +177,5 @@ export {
     renderNewRecipeButton,
     renderPage,
     renderReturnButton,
-    renderHead
+    renderHead,
 };

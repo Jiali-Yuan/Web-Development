@@ -1,4 +1,3 @@
-//login button
 export const fetchLogIn = (username) => {
     return fetch('/session', {
       method: 'POST',
@@ -18,7 +17,6 @@ export const fetchLogIn = (username) => {
     });
   };
 
-  //login status
   export const fetchLoginStatus = () => {
     return fetch('/session', {
       method: 'GET',
@@ -34,7 +32,6 @@ export const fetchLogIn = (username) => {
     });
   };
 
-  //logout button
   export const fetchLogOut = () => {
     return fetch('/session', {
       method: 'DELETE'
@@ -46,7 +43,6 @@ export const fetchLogIn = (username) => {
     });
   };
 
-  //Get recipes list
   export const fetchRecipes = () => {
     return fetch('/recipes', {
       method: 'GET',
@@ -62,7 +58,6 @@ export const fetchLogIn = (username) => {
     });
   };
 
-  //Add new recipe
   export const fetchAddRecipe = (title, ingredients, instruction) => {
     return fetch('/recipes', {
       method: 'POST',
@@ -70,7 +65,6 @@ export const fetchLogIn = (username) => {
         'content-type': 'application/json',
       }),
       body: JSON.stringify({title: title.value, ingredients: ingredients.value, instruction: instruction.value}),
-    //   body: JSON.stringify(),
     })
     .catch( () => {
       return Promise.reject({code: 'network-error'});
@@ -83,7 +77,6 @@ export const fetchLogIn = (username) => {
     });
   };
 
-  //Back to home page
   export const fetchReturnPage = () => {
     return fetch('/recipes', {
       method: 'GET',

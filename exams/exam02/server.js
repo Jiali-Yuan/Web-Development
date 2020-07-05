@@ -8,16 +8,6 @@ app.use(express.static('./public'));
 const recipes = require('./recipe-data');
 const { v4: uuidv4 } = require('uuid');
 
-const Counter = () => {
-    let count = 2;
-    return () => {
-        count += 1;
-        return count;
-    };
-};
-const nextTitleId = Counter();
-
-//init
 app.get('/session', (req, res) => {
     const uid = req.cookies.uid;
     if (!uid) {
@@ -32,7 +22,6 @@ app.get('/session', (req, res) => {
     res.sendStatus(200);
 });
 
-//login
 app.post('/session', express.json(), (req, res) => {
     const username = req.body.username;
     if (username === 'dog' || username === ' ') {
@@ -46,19 +35,16 @@ app.post('/session', express.json(), (req, res) => {
     res.json(recipeList);
 });
 
-//logout
 app.delete('/session', express.json(), (req, res) => {
     const uid = req.cookies.uid;
     res.clearCookie('uid');
     res.sendStatus(200);
 });
 
-//Get recipes list
 app.get('/recipes', (req, res) => {
     res.status(200).json(recipes.recipeList);
 });
 
-//Add new recipe
 app.post('/recipes', express.json(), (req, res) => {
     const uid = req.cookies.uid;
     const author = recipes.users[uid].username;
@@ -69,7 +55,7 @@ app.post('/recipes', express.json(), (req, res) => {
     if (!title || !ingredients || !instruction) {
         res.status(400).json({ code: "provide-error" });
     } else {
-        const id = nextTitleId();
+        const id = uuidv4();
         const newRecipe = {
             id: id, title: title, author: author,
             ingredients: ingredients, instruction: instruction
