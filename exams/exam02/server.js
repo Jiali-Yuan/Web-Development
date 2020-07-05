@@ -5,7 +5,7 @@ const PORT = 3000;
 
 app.use(cookieParser());
 app.use(express.static('./public'));
-const recipes = require('./recipes');
+const recipes = require('./recipe-data');
 const { v4: uuidv4 } = require('uuid');
 
 const Counter = () => {

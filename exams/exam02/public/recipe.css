@@ -1,0 +1,109 @@
+body {
+    background-color: rgb(241, 245, 204);
+    background-image: url("food.jpg");
+  }
+
+  .recipes-list {
+    text-align: center;
+    position:fixed;
+    top: 60%;
+    left: 40%;
+    width:30em;
+    margin-top: -15em;
+    margin-left: -15em; 
+    font-family: courier;
+    font-size: large;
+  }
+
+  .login {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    width: 230px;
+  }
+
+  .logout {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    width: 90px;
+  }
+
+  .return-button {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    width: 120px;
+  }
+
+  .new-recipe {
+    position: fixed;
+    top: 20px;
+    right: 150px;
+    width: 230px;
+  }
+
+  .add-new-recipe {
+    margin-top: 50px;;
+  }
+
+  .details-page {
+    width: 300px;
+    margin-top: 100px;
+    padding: 10px; 
+    color: #50bcee;
+    font-family: courier;
+  }
+
+  ul{
+    list-style:none;
+ }
+ .recipes-list li {
+     margin-top: 10px;
+ }
+ 
+ a{
+    text-decoration:none;
+    color: red;
+ }
+
+ button {
+    flex-grow: 1;
+    background: #86dfba;
+    border: 0;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.add-page {
+    color: #3abbee;
+    font-family: courier;
+    flex-direction: column;
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    margin-top: -15em;
+    margin-left: -15em; 
+}
+
+.headline {
+    text-align: center;
+}
+
+h1 {
+    color: rgb(236, 102, 102);
+}
+
+.status {
+    position: fixed;
+    top: 150px;
+    right: 200px;
+    width: 230px;
+    color: red;
+    font-size: 30px;
+    font-family: emoji;
+}
+  

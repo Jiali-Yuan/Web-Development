@@ -86,17 +86,29 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/recipe.js":
-/*!***********************!*\
-  !*** ./src/recipe.js ***!
-  \***********************/
-/*! no exports provided */
+/***/ "./src/recipe-web.js":
+/*!***************************!*\
+  !*** ./src/recipe-web.js ***!
+  \***************************/
+/*! exports provided: appState, clearAddPage, clearList, clearDetailsPage, renderDetailsPage, renderAddPage, renderErrors, renderList, renderLogin, renderLogout, renderNewRecipeButton, renderPage, renderReturnButton, renderHead */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services */ "./src/services.js");
-
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "appState", function() { return appState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearAddPage", function() { return clearAddPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearList", function() { return clearList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearDetailsPage", function() { return clearDetailsPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderDetailsPage", function() { return renderDetailsPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderAddPage", function() { return renderAddPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderErrors", function() { return renderErrors; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderList", function() { return renderList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderLogin", function() { return renderLogin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderLogout", function() { return renderLogout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderNewRecipeButton", function() { return renderNewRecipeButton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderPage", function() { return renderPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderReturnButton", function() { return renderReturnButton; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "renderHead", function() { return renderHead; });
 var appState = {
   isLoggedIn: false,
   toLogout: false,
@@ -105,12 +117,14 @@ var appState = {
   clientRecipeList: {}
 };
 
-function refreshData() {
-  return Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchRecipes"])().then(function (list) {
-    for (var key in list) {
-      appState.clientRecipeList[key] = list[key];
-    }
-  });
+function renderHead(show) {
+  var headline = document.querySelector('.headline');
+
+  if (show) {
+    headline.innerHTML = "\n        <h1>My Recipes</h1>\n     ";
+  } else {
+    headline.innerHTML = '';
+  }
 }
 
 function clearList() {
@@ -178,11 +192,13 @@ function renderPage() {
     renderLogout(true);
     renderNewRecipeButton(true);
     renderList();
+    renderHead(true);
   } else {
     renderLogin(true);
     renderLogout(false);
     renderNewRecipeButton(false);
     renderList();
+    renderHead(true);
   }
 
   renderErrors(appState.error);
@@ -202,12 +218,11 @@ function renderAddPage(show) {
   var addPage = document.querySelector('.add-page');
 
   if (show) {
-    addPage.innerHTML = "\n        <label>Title: <input class=\"add-title\" value=\"\"/></label>\n        <label>Ingredients: </label><textarea class=\"add-ingredients\" value=\"\"></textarea>\n        <label>Instruction: </label><textarea class=\"add-instruction\" value=\"\"></textarea>\n        <button class=\"add-new-recipe\" type=\"button\">Add New Recipe</button>\n        ";
+    addPage.innerHTML = "\n        <div class=\"title\">\n        <label>Title: <input class=\"add-title\" value=\"\"/></label>\n        </div>\n        <div class=\"ingredients\">\n        <label>Ingredients: </label><textarea class=\"add-ingredients\" value=\"\"></textarea>\n        </div>\n        <div class=\"instruction\">\n        <label>Instruction: </label><textarea class=\"add-instruction\" value=\"\"></textarea>\n        </div>\n        <button class=\"add-new-recipe\" type=\"button\">Add New Recipe</button>\n        ";
   } else {
     addPage.innerHTML = '';
   }
-} //render detail page
-
+}
 
 function renderDetailsPage(list) {
   var listRecipe = document.querySelector('.details-page');
@@ -219,20 +234,48 @@ function clearDetailsPage() {
   listRecipe.innerHTML = '';
 }
 
-var detailButton = document.querySelector('.recipes-list');
-var first = true;
-detailButton.addEventListener('click', function (e) {
-  var id = e.target.dataset.id;
-  e.preventDefault();
 
-  if (first) {
+
+/***/ }),
+
+/***/ "./src/recipe.js":
+/*!***********************!*\
+  !*** ./src/recipe.js ***!
+  \***********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services */ "./src/services.js");
+/* harmony import */ var _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./recipe-web.js */ "./src/recipe-web.js");
+
+
+
+function refreshData() {
+  return Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchRecipes"])().then(function (list) {
+    for (var key in list) {
+      _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].clientRecipeList[key] = list[key];
+    }
+  });
+}
+
+var detailButton = document.querySelector('.recipes-list');
+var firstClick = true;
+console.log(detailButton);
+detailButton.addEventListener('click', function (e) {
+  e.preventDefault();
+  var id = e.target.dataset.id;
+  console.log(e.target);
+
+  if (firstClick) {
     Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchRecipes"])().then(function (list) {
-      renderDetailsPage(list[id]);
-      first = false;
+      Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderDetailsPage"])(list[id]);
+      firstClick = false;
     });
   } else {
-    clearDetailsPage();
-    first = true;
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearDetailsPage"])();
+    firstClick = true;
   }
 }); //to add new recipe button handler
 
@@ -242,11 +285,13 @@ newRecipeButton.addEventListener('click', function (e) {
     return;
   }
 
-  clearList();
-  renderLogout(false);
-  renderAddPage(true);
-  renderReturnButton(true);
-  renderNewRecipeButton(false);
+  Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearList"])();
+  Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderLogout"])(false);
+  Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderAddPage"])(true);
+  Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderReturnButton"])(true);
+  Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderNewRecipeButton"])(false);
+  Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderHead"])(false);
+  Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearDetailsPage"])();
 }); //add new recipe button handler
 
 var addNewRecipe = document.querySelector('.add-page');
@@ -261,20 +306,20 @@ addNewRecipe.addEventListener('click', function (e) {
   Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchAddRecipe"])(title, ingredients, instruction).then(function (list) {
     var id = list.id;
     var author = list.author;
-    appState.clientRecipeList[id] = {
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].clientRecipeList[id] = {
       id: id,
       title: title.value,
       author: author,
       ingredients: ingredients.value,
       instruction: instruction.value
     };
-    appState.error = '';
-    renderReturnButton(false);
-    renderAddPage(false);
-    renderPage();
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = '';
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderReturnButton"])(false);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderAddPage"])(false);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
   })["catch"](function () {
-    appState.error = 'All fields required';
-    renderErrors(appState.error);
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = 'All fields required';
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderErrors"])(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error);
   });
 }); //return home page button
 
@@ -285,12 +330,12 @@ returnButton.addEventListener('click', function (e) {
   }
 
   Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchReturnPage"])().then(function (list) {
-    appState.isLoggedIn = true;
-    appState.error = '';
-    appState.toLogout = true;
-    renderReturnButton(false);
-    clearAddPage();
-    renderPage();
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].isLoggedIn = true;
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = '';
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].toLogout = true;
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderReturnButton"])(false);
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearAddPage"])();
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
   });
 }); //login button
 
@@ -302,14 +347,15 @@ login.addEventListener('click', function (e) {
 
   var username = login.querySelector('input').value;
   Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchLogIn"])(username).then(function (list) {
-    appState.isLoggedIn = true;
-    appState.error = '';
-    appState.toLogout = true;
-    appState.clientRecipeList = list;
-    renderPage();
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].isLoggedIn = true;
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = '';
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].toLogout = true;
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].clientRecipeList = list;
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["clearDetailsPage"])();
   })["catch"](function () {
-    appState.error = 'Login failed';
-    renderPage();
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = 'Login failed';
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
   });
 }); //logout button
 
@@ -320,21 +366,22 @@ logout.addEventListener('click', function (e) {
   }
 
   Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchLogOut"])().then(function () {
-    appState.isLoggedIn = false;
-    appState.error = '';
-    appState.toLogout = false;
-    renderPage();
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].isLoggedIn = false;
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].error = '';
+    _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].toLogout = false;
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderHead"])(true);
   });
 });
 Object(_services__WEBPACK_IMPORTED_MODULE_0__["fetchLoginStatus"])().then(function () {
-  appState.isLoggedIn = true;
+  _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].isLoggedIn = true;
   refreshData().then(function () {
-    renderPage();
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
   });
 })["catch"](function () {
-  appState.isLoggedIn = false;
+  _recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["appState"].isLoggedIn = false;
   refreshData().then(function () {
-    renderPage();
+    Object(_recipe_web_js__WEBPACK_IMPORTED_MODULE_1__["renderPage"])();
   });
 });
 
