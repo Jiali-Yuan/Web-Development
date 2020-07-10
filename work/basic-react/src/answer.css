@@ -1,0 +1,28 @@
+.answers-panel{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.answers-panel li{
+    padding: 10px;
+    background-color: rgb(128, 175, 177);
+    margin: 0 0 5px;
+}
+.answers-panel li:hover{
+    cursor: pointer;
+    background-color: #719997;
+}
+.answers-panel .correct,
+.answers-panel .correct:hover {
+    background-color: #26b90c;
+    color: #fff;
+}
+.answers-panel .incorrect,
+.answers-panel .incorrect:hover {
+    background-color: #f06c6c;
+    color: #fff;
+}
+.answers-panel[disabled] {
+    pointer-events: none;
+    opacity: 0.7;
+}
