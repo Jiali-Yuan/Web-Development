@@ -1,8 +1,7 @@
-
 export const quizs = [
     {
         question: "Name Jon Snow’s Direwolf.",
-        options: ["Lady", "Nymeria", "Ghost", "Catelyn Grey Wind" ],
+        options: ["Lady", "Nymeria", "Ghost", "Grey Wind"],
         answer: "Ghost"
     },
 
