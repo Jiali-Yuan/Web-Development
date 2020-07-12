@@ -1,0 +1,140 @@
+body {
+    background-image: url("food.jpg");
+  }
+
+  .recipes-list {
+      display: block;
+    text-align: center;
+    position:fixed;
+    top: 60%;
+    left: 40%;
+    width:30em;
+    margin-top: -15em;
+    margin-left: -15em; 
+    font-family: courier;
+    font-size: large;
+    overflow-y: scroll;
+  }
+
+  .login {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    width: 230px;
+  }
+
+  .logout {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    width: 90px;
+  }
+
+  .return-button {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    width: 120px;
+  }
+
+  .new-recipe {
+    position: fixed;
+    top: 20px;
+    right: 150px;
+    width: 230px;
+  }
+
+  .add-new-recipe {
+    margin-top: 50px;;
+  }
+
+  .details-page {
+    text-align: center;
+    position:fixed;
+    top: 60%;
+    left: 40%;
+    width:30em;
+    margin-top: -15em;
+    margin-left: -15em; 
+    font-family: courier;
+    font-size: large;
+  }
+
+  .detail-header {
+    position:fixed;
+    color: red;
+    top: 10%;
+    left: 40%;
+    font-size: 25px;
+    font-family: initial;
+  }
+
+  ul{
+    list-style:none;
+ }
+ .recipes-list li {
+     margin-top: 10px;
+ }
+ 
+ a{
+    text-decoration:none;
+    color: rgba(240, 105, 51, 0.973);
+ }
+
+ button {
+    flex-grow: 1;
+    background: #86dfba;
+    border: 0;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+a:hover {
+    background-color: #c3f07ac7;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+.add-page {
+    color: #3abbee;
+    font-family: courier;
+    flex-direction: column;
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    margin-top: -15em;
+    margin-left: -15em; 
+}
+
+.headline {
+    text-align: center;
+}
+
+h1 {
+    color: rgb(236, 102, 102);
+}
+
+.status {
+    position: fixed;
+    top: 150px;
+    right: 200px;
+    width: 230px;
+    color: rgb(64, 247, 18);
+    font-size: 30px;
+    font-family: emoji;
+}
+
+.note {
+    font-size: 20px;
+    color: teal;
+}
+
+span {
+    color: rgb(73, 163, 13);
+}
+
+  
