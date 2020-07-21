@@ -83,6 +83,7 @@ Mon Jul 6,
 Mon Jul 13,
 Mon Jul 20,
 Mon Jul 27,
+Mon Aug 3
 
  - Frontend frameworks/libraries, React, virtual DOM, JSX, Single Page Applications (SPA)
  - props vs state, Pure components vs stateful components
@@ -94,6 +95,10 @@ Mon Jul 27,
 
 At the end of Section 3 you should be able to analyze provided designs to matching write a complex single page web application (SPA) and prior to actual coding identify potential problems with development due to insufficient/poor requirements.
 
-### Final Projects and Exams Due 
-Mon Aug 10 (No class, just Project and Exams due)
+### Final Exam due
+Sun Aug 2 (11:59pm PT)
+
+### Final Projects Due 
+Sun Aug 9 (11:59pm PT)
+No class Mon Aug 10 (just Project due)
 
