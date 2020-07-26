@@ -1,0 +1,135 @@
+.chat-app {
+  width: 700px;
+  height: 500px;
+  margin-top: 50px;
+  border: 3px solid rgba(50, 58, 52, 0.329);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Login page */
+.login {
+  width: 400px;
+  height: 200px;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 2px rgba(176, 191, 206, 0.596);
+}
+
+.login p {
+  font-size: 25px;
+}
+
+/* Message list css style  */
+
+.display-panel {
+  display: flex;
+  flex-direction: row;
+}
+
+.message-panel {
+  margin: 5px;
+  height: 400px;
+  color: rgb(104, 86, 86);
+  list-style: none;
+  overflow-y: auto;
+  border-radius: 5px;
+}
+
+.chat-message {
+  margin-left: 0px;
+  margin-top: 0;
+  background: #a8e465;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.chat-time {
+  width: 80px;
+  font-size: 13px;
+}
+
+.chat-person {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+.to-send {
+  flex-grow: 5;
+  width: 500px;
+  height: 25px;
+  padding-left: 5px;
+  line-height: 18px;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-left: 3px;
+  margin-right: 1px;
+  border: 2px solid #9f9f9f54;
+}
+
+.out-going button {
+  flex-grow: 1;
+  background: #9ed1a9;
+  border: 0;
+  border-radius: 5px;
+  font-size: 20px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+/* People in the room list css style */
+.user-panel {
+  margin: 3px;
+  border-radius: 5px;
+  height: 400px;
+  color: cornflowerblue;
+  list-style: none;
+  overflow: auto;
+}
+
+.user-name {
+  margin-top: 2px;
+  background: #94c9e79c;
+  color: #ffffff;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.user-title {
+  margin-top: 50px;
+  text-align: center;
+  font-size: large;
+  color: rgb(7, 85, 173);
+  margin-bottom: 10px;
+}
+
+.welcome {
+  margin-top: 10px;
+  font-family: fantasy;
+  color: crimson;
+}
+
+/* Logout button css style */
+.logout button {
+  margin-top: 10px;
+  flex-grow: 1;
+  background: #86dfba;
+  border: 0;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #ffffff;
+  cursor: pointer;
+}
