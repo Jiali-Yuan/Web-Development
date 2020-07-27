@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { fetchAllTasks, fetchOneTask } from './services';
-import { fetchUpdateTask, fetchRemoveOneTask, fetchUpdateTheme } from './services';
+import { fetchAllTasks, fetchUpdateTask, fetchRemoveOneTask, fetchUpdateTheme } from './services';
 import CreatePage from './CreatePage';
 import UpdatePage from './UpdatePage';
 import DetailPage from './DetailPage';
+import Filter from './Filter';
+import Sort from './Sort';
+import Theme from './Theme';
 
 export default function TodoPanel({ user }) {
     const [todoList, setTodoList] = useState([]);
-    const [newTask, setNewTask] = useState("");
-    const [error, setError] = useState("");
     const [update, setUpdate] = useState(false);
     const [create, setCreate] = useState(false);
     const [view, setView] = useState(false);
@@ -16,8 +16,7 @@ export default function TodoPanel({ user }) {
     const [clickedTaskId, setClickedTaskId] = useState("");
     const [clickedTaskName, setClickedTaskName] = useState("");
     const [clickedTaskContent, setClickedTaskContent] = useState("");
-    const [theme, setTheme] = useState(user.theme);
-    // const [task, setTask] = useState({taskId: "", taskName: "", taskContent: ""});
+    const [theme, setTheme] = useState("Default");
 
     useEffect(() => {
         fetchAllTasks(user.username)
@@ -26,13 +25,17 @@ export default function TodoPanel({ user }) {
             })
     }, []);
 
-    const updateTheme = () => {
-        fetchUpdateTheme(user.username, theme)
-            .then(theme => {
-                setTheme(theme.data);
+    const updateTheme = (clickedTheme) => {
+        fetchUpdateTheme(user.username, clickedTheme)
+            .then(() => {
+                setTheme(clickedTheme);
             })
     };
-    console.log("theme: " + theme);
+
+    const themeStyle = {
+        backgroundColor: theme === "Dark" ? "#333" :
+            theme === "Light" ? "#ccc" : theme === "Colorful" ? "red" : ""
+    };
 
     //Remove button.
     const removeOneTask = (index) => {
@@ -75,21 +78,81 @@ export default function TodoPanel({ user }) {
         setUpdate(false);
     };
 
+    const onFilter = (filter) => {
+        if (filter === "undo") {
+            const filteredTask = [];
+            for (let task of todoList) {
+                if (!task.isComplete) {
+                    filteredTask.push(task);
+                }
+            }
+            setTodoList(filteredTask);
+        } else {
+            fetchAllTasks(user.username)
+                .then(tasks => {
+                    setTodoList(Object.values(tasks.data));
+                })
+        }
+    };
+
+    const onSort = (sort) => {
+        const sortedList = [];
+        const undoList = [];
+        const doneList = [];
+        for (let task of todoList) {
+            sortedList.push(task);
+        }
+        for (let task of todoList) {
+            if (!task.isComplete) {
+                undoList.push(task);
+            } else {
+                doneList.push(task);
+            }
+        }
+        if (sort === "up") {
+            sortedList.sort((a, b) => a.taskName.localeCompare(b.taskName));
+            setTodoList(sortedList);
+        } else if (sort === "down") {
+            sortedList.sort((b, a) => a.taskName.localeCompare(b.taskName));
+            setTodoList(sortedList);
+        } else if (sort === "byUndo") {
+            setTodoList(undoList.concat(doneList));
+        } else if (sort === "byDone") {
+            setTodoList(doneList.concat(undoList));
+        } else {
+            fetchAllTasks(user.username)
+                .then(tasks => {
+                    setTodoList(Object.values(tasks.data));
+                })
+        }
+    };
+
     //Done button.
+    const [isActive, setIsActive] = useState(true);
     const completeTodo = (todo) => {
-        fetchUpdateTask(username, todo.taskId, todo.taskName, todo.taskContent, true)
+        fetchUpdateTask(username, todo.taskId, todo.taskName, todo.taskContent, isActive)
             .then((task) => {
                 onUpdateSuccess(task.data);
+                setIsActive(!isActive);
             })
+    };
+
+    //Refresh button.
+    const onRefresh = () => {
+        const currentList = [];
+        for (let task of todoList) {
+            currentList.push(task);
+        }
+        setTodoList(currentList);
     };
 
     const showTaskList = todoList.map((todo) => (
         <li className="task-content" key={todo.taskId}>
             <span className={todo.isComplete ? "complete" : ""}>{todo.taskName}</span>
-            <button onClick={() => completeTodo(todo)}>Done</button>
-            <button onClick={() => viewButtonHandler(todo.taskName, todo.taskContent)}>View</button>
-            <button onClick={() => editButtonHandler(todo.taskName, todo.taskContent, todo.taskId)}>EDIT</button>
-            <button onClick={() => removeOneTask(todo.taskId)}>Remove</button>
+            <span className="done" onClick={() => completeTodo(todo)}>{todo.isComplete ? "Undo" : "Mark as done"}</span>
+            <span className="view" onClick={() => viewButtonHandler(todo.taskName, todo.taskContent)}>View</span>
+            <span className="edit" onClick={() => editButtonHandler(todo.taskName, todo.taskContent, todo.taskId)}>Edit</span>
+            <span className="remove" onClick={() => removeOneTask(todo.taskId)}>Remove</span>
         </li>
     ));
 
@@ -110,21 +173,20 @@ export default function TodoPanel({ user }) {
                 </div> : (view ?
                     <div>
                         <DetailPage setView={setView}
-                        clickedTaskName={clickedTaskName}
-                        clickedTaskContent={clickedTaskContent}/>
+                            clickedTaskName={clickedTaskName}
+                            clickedTaskContent={clickedTaskContent} />
                     </div> :
-                    <div>
+                    <div className="todo-panel" style={themeStyle}>
                         <h1>Task List</h1>
-                        <label>Theme: </label>
-                        <select>
-                            <option>Default</option>
-                            <option value="0">Dark</option>
-                            <option value="1">Light</option>
-                            <option value="2">Colorful</option>
-                        </select>
+                        <div className="title-bar">
+                            <Theme updateTheme={updateTheme} />
+                            <Filter onFilter={onFilter} />
+                            <Sort onSort={onSort} />
+                            <button className="refresh-bar" onClick={onRefresh}>Refresh</button>
+                        </div>
                         {showTaskList}
-                        <button onClick={createButtonHandler}>CREATE</button>
+                        <button className="create" onClick={createButtonHandler}>CREATE</button>
                     </div>))}
         </div>
-    )
-}
+    );
+};

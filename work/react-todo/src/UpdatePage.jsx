@@ -9,22 +9,23 @@ export default function UpdatePage({ setUpdate, username, clickedTaskId, clicked
         fetchUpdateTask(username, taskId, newTaskName, newTaskContent, false)
             .then((task) => {
                 onUpdateSuccess(task.data);
-            })
-            .catch((err) => {
-                //setError(err.message);
             });
     };
 
     const backButtonHandler = () => {
         setUpdate(false);
-    }
+    };
 
     return (
-        <div>
+        <div className="update-page">
+            <label>Task name: </label>
             <input value={newTaskName} onChange={(e) => setNewTaskName(e.target.value)}></input>
+            <br />
+            <label>Task details: </label>
             <textarea value={newTaskContent} onChange={(e) => setNewTaskContent(e.target.value)}></textarea>
-            <button onClick={() => updateTask(clickedTaskId)}>Update</button>
-            <button onClick={backButtonHandler}>BACK</button>
+            <br />
+            <button className="button" onClick={() => updateTask(clickedTaskId)}>Update</button>
+            <button className="button" onClick={backButtonHandler}>Back</button>
         </div>
-    )
+    );
 }

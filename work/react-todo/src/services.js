@@ -13,7 +13,6 @@ export const fetchLoginStatus = () => {
     });
 };
 
-
 export const fetchLogIn = (username) => {
   return fetch('/session', {
     method: 'POST',
@@ -77,21 +76,6 @@ export const fetchAddNewTask = (username, taskName, taskContent, isComplete) => 
     });
 };
 
-export const fetchOneTask = (username, taskId) => {
-  return fetch(`/tasks/${username}/${taskId}`, {
-    method: 'GET',
-  })
-    .catch(() => {
-      return Promise.reject({ code: 'network-error' });
-    })
-    .then((response) => {
-      if (!response.ok) {
-        return Promise.reject({ code: 'login-invalid' });
-      }
-      return response.json();
-    });
-};
-
 export const fetchRemoveOneTask = (username, taskId) => {
   return fetch(`/tasks/${username}/${taskId}`, {
     method: 'DELETE',
@@ -132,7 +116,7 @@ export const fetchUpdateTheme = (username, theme) => {
     headers: new Headers({
       'content-type': 'application/json',
     }),
-    body: JSON.stringify({ user: { theme : theme} }),
+    body: JSON.stringify({ theme : theme }),
   })
     .catch(() => {
       return Promise.reject({ code: 'network-error' });

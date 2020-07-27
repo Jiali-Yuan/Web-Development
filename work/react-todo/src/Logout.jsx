@@ -11,6 +11,6 @@ const Logout = ({ onLogout }) => {
             <button onClick={performLogout}>Logout</button>
         </div>
     );
-}
+};
 
 export default Logout;

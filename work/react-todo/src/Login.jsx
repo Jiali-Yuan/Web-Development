@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import {fetchLogIn} from './services';
-import {errorMessages} from './todos'; 
+import { fetchLogIn } from './services';
 
 const Login = ({ user, onLogin }) => {
     const [error, setError] = useState("");
@@ -10,7 +9,7 @@ const Login = ({ user, onLogin }) => {
 
     const performLogin = () => {
         if (!username) {
-            setError(errorMessages.USERNAME_INVALID);
+            setError("Invalid username, try again!");
             return;
         }
         setError('');
@@ -29,7 +28,7 @@ const Login = ({ user, onLogin }) => {
             <p className="error">{error}</p>
             {isLoading ? <span>Loading...</span> :
                 <div>
-                    <p>Please Login</p>
+                    <h2>Please Login</h2>
                     <div className="input-username">
                         <input placeholder="Username" onChange={(e) => setUsername(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' ? performLogin(e) : null} />

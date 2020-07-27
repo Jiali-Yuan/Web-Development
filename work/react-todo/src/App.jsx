@@ -6,8 +6,7 @@ import { fetchLoginStatus, fetchTheme } from './services';
 import TodoPanel from './TodoPanel';
 
 function App() {
-
-  const [userState, setUserState] = useState({ isLoggedIn: false, username: "", theme: "" });
+  const [userState, setUserState] = useState({ isLoggedIn: false, username: "", theme: ""});
   useEffect(() => {
     fetchLoginStatus()
       .then(sessionInfo => {
@@ -18,6 +17,8 @@ function App() {
         });
       });
   }, []);
+  console.log("theme after login: " + userState.theme)
+  console.log("username: " + userState.username);
 
   const login = (username) => {
     setUserState({
@@ -33,14 +34,13 @@ function App() {
     });
   };
 
-
   return (
     <div> {userState.isLoggedIn ?
       <div>
-        <div><TodoPanel user={userState} /></div>
+        <div><TodoPanel user={userState}/></div>
         <div><Logout onLogout={logout} /></div>
       </div> :
-      <Login user={userState} onLogin={login} />}
+      <Login className="login" user={userState} onLogin={login} />}
     </div>
   );
 }
