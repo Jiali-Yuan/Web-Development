@@ -1,0 +1,268 @@
+.home-page {
+  background-image: url("/park.jpeg");
+  height: 700px;
+}
+.header {
+  height: 80px;
+  text-align: center;
+  color: aliceblue;
+  padding-top: 20px;
+  opacity: 0.7;
+}
+.welcome {
+  text-align: center;
+  font-size: 40px;
+  font-family: cursive;
+  color: antiquewhite;
+  opacity: 0.5;
+}
+
+.body {
+  height: 180px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.body h1 {
+  font-size: 50px;
+  cursor: pointer;
+  color: aliceblue;
+  opacity: 0.7;
+}
+
+/* Footer.jsx */
+.footer {
+  height: 220px;
+  text-align: center;
+  opacity: 0.7;
+}
+.login-form {
+  display: flex;
+  flex-flow: column;
+  width: 200px;
+  bottom: 150px;
+  margin: 0 auto;
+  background-color: rgba(151, 156, 160, 0.425);
+  padding: 20px;
+  border-radius: 10px;
+}
+.login-input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+.logout {
+  position: absolute;
+  left: 100px;
+  top: 15px;
+  color: rgb(102, 131, 83);
+}
+.logout:hover {
+  background-color: #c3f07ac7;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ParksList.jsx */
+.parks-panel h1 {
+  text-align: center;
+  color: rgb(51, 95, 31);
+  font-family: "Times New Roman", Times, serif;
+}
+.parks-panel li {
+  font-size: 20px;
+  transition: 0.2s;
+  list-style: none;
+  height: 40px;
+  margin: 10px;
+}
+.list-panel {
+  margin-top: 100px;
+  text-align: center;
+}
+.park-name {
+  color: rgb(112, 64, 64);
+  font-size: 20px;
+  font-family: monospace;
+  font-weight: 600;
+  cursor: pointer;
+}
+.park-name:hover {
+  background-color: #c3f07ac7;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.poster {
+  font-size: 15px;
+  color: #9e9a9a;
+}
+.post-time {
+  font-size: 15px;
+  font-style: italic;
+  color: #9e9a9a;
+}
+.home-button {
+  position: absolute;
+  left: 50px;
+  top: 15px;
+  color: rgb(102, 131, 83);
+}
+.home-button:hover {
+  background-color: #c3f07ac7;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ParkDetails.jsx */
+.details-panel h2 {
+  text-align: center;
+  color: rgb(27, 116, 35);
+  font-family: -apple-system;
+}
+.park-info {
+  width: 1200px;
+  margin: 0 auto;
+}
+.review-title {
+  margin-left: 35px;
+  margin-top: 25px;
+  color: rgb(199, 118, 118);
+  font-weight: 800;
+}
+.park-words {
+  margin-left: 50px;
+  text-align: center;
+  line-height: 1.6;
+  font-size: large;
+  font-family: monospace;
+}
+.park-introduction {
+  color: rgb(48, 61, 39);
+}
+.park-location {
+  font-style: italic;
+  color: rgb(132, 158, 114);
+}
+.location-title {
+  font-style: italic;
+  color: rgb(76, 109, 15);
+}
+.photo {
+  width: 500px;
+  height: 300px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+img {
+  border-radius: 15px;
+}
+.reviews {
+  border: #ebe6e6 solid;
+  border-radius: 15px;
+  list-style: none;
+  margin: 15px;
+  height: 100px;
+  overflow-y: scroll;
+}
+.create-button {
+  position: absolute;
+  left: 100px;
+  top: 15px;
+  color: rgb(102, 131, 83);
+}
+.create-button:hover {
+  background-color: #c3f07ac7;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.detail-back {
+  position: absolute;
+  left: 50px;
+  top: 15px;
+  color: rgb(102, 131, 83);
+}
+.detail-back:hover {
+  background-color: #c3f07ac7;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.input-review {
+  margin-left: 15px;
+  width: 91%;
+}
+.review-panel {
+  display: flex;
+}
+.review-panel button {
+  background-color: #c3f07ac7;
+  color: rgb(117, 66, 66);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.review-list {
+  padding-top: 5px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+.review-text {
+  font-family: "Times New Roman", Times, serif;
+}
+.reviewer {
+  color: rgb(117, 117, 119);
+  margin: 10px;
+  font-size: 13px;
+  font-style: italic;
+}
+.review-time {
+  margin: 10px;
+  font-size: 10px;
+  font-style: italic;
+  color: rgb(128, 126, 129);
+}
+.park-info {
+  display: flex;
+}
+
+/* CreatePage.jsx */
+.create-page {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  background-image: url("/createPage.jpg");
+}
+.input-park {
+  width: 500px;
+  height: 100px;
+  margin: 10px;
+}
+.input-name {
+  width: 500px;
+  height: 50px;
+  margin: 10px;
+}
+.create-action {
+  margin-right: 10px;
+  margin-left: 45px;
+  color: rgb(66, 155, 233);
+}
+.create-action:hover {
+  background-color: #95cdeec7;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.input-file {
+  margin-left: 10px;
+}
