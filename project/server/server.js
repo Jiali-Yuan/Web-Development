@@ -6,7 +6,7 @@ const path = require('path');
 const fileUpload = require('express-fileupload');
 
 app.use(cookieParser());
-app.use(express.static('../build'));
+app.use(express.static('./build'));
 app.use(fileUpload());
 
 const parks = require('./parks-data');
